@@ -19,11 +19,9 @@ module.exports = {
             const Password = req.body.password
 
             const id = uuidv4()
-            const file = req.files.photo;
-            console.log(file)
-            console.log(Email)
-            console.log(Name)
-            console.log(file)
+            // const file = req.files.photo;
+            // console.log(Email)
+            // console.log(Name)
 
             // console.log("file.tempFilePath", file.tempFilePath)
             const CheckUserRegistered = await SignupTableData.findOne({ email: Email })
