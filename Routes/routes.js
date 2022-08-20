@@ -7,6 +7,7 @@ const { AllPostController } = require("../Controller/All_Post_Controller")
 const { LikePostController } = require("../Controller/Liked_post_controller")
 const { GetUserProfile } = require('../Controller/Get_user_profile_controller')
 const { GetLikePost } = require("../Controller/get_like_post_controller")
+const { updateUser } = require("../Controller/update_user_controller")
 
 // post Apis//
 routes.post("/user/registration", SignupController);
@@ -20,6 +21,8 @@ routes.get("/posts/all_post", AllPostController);
 routes.get("/user/get_user/:id", GetUserProfile);
 routes.get("/posts/like_post_by_user/:id", GetLikePost);
 
+// update Apis//
+routes.get("/user/profile/:id", updateUser);
 
 
 
