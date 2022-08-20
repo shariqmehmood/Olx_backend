@@ -22,7 +22,7 @@ routes.get("/user/get_user/:id", GetUserProfile);
 routes.get("/posts/like_post_by_user/:id", GetLikePost);
 
 // update Apis//
-routes.get("/user/profile/:id", updateUser);
+routes.put("/user/profile/:id", updateUser);
 
 
 
