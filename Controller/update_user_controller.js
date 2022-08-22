@@ -7,14 +7,6 @@ module.exports = {
         const user_id = req?.params.id
         console.log("id----", user_id)
         let finduser = await SignupTableData.findOneAndUpdate({ user_id: user_id }, req.body)
-
-            // if (!finduser) {
-            //     return res.send({
-            //         status: 404,
-            //         sucess: false,
-            //         msg: "user not found",
-            //     })
-            // }
             .then((data) => {
                 return res.send({
                     status: 201,
