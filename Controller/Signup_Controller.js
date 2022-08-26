@@ -11,17 +11,18 @@ cloudinary.config({
 module.exports = {
     SignupController: async (req, res) => {
         try {
-            const today = new Date();
             const { body } = req
+            const today = new Date();
+            console.log(body, '======>', req.file, "+++++++++++++++++++++")
             const Email = req.body.email;
+            console.log(Email, "Email")
             const Name = req.body.name;
             const UserName = req.body.userName
+            const file = req?.body?.file
             const salt = await bcrypt.genSalt(10);
             const Hashpasword = await bcrypt.hash(req.body.password, salt);
 
             const id = uuidv4()
-            const file = req.files.photo;
-            console.log('file ', file)
             console.log('body ', body)
             const CheckUserRegistered = await SignupTableData.findOne({ email: Email })
             if (CheckUserRegistered) {
@@ -31,15 +32,25 @@ module.exports = {
                     msg: "User Already Registered",
                 })
             }
-
-            cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+            console.log(file, "file")
+            cloudinary.uploader.upload(file?.path, (err, result) => {
+                // cloudinary.uploader.upload(file?.data, (err, result) => {
+                console.log(err)
+                if (err) {
+                    return res.send({
+                        status: 500,
+                        success: false,
+                        message: 'server error'
+                    })
+                }
+                console.log(result)
                 let SignupDataObj = new SignupTableData({
                     user_id: id,
                     name: Name,
                     email: Email,
                     userName: UserName,
                     password: Hashpasword,
-                    url: result.url,
+                    url: result?.url,
                     created_at: today,
                     updated_at: today,
                     is_deleted: false,

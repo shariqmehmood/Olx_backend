@@ -2,12 +2,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const fileUpload = require("express-fileupload")
+const bodyParser = require('body-parser')
 
 let app = express();
-const routes = require('./Routes/routes')
+const routes = require('./Routes/routes');
 
+app.use(bodyParser.json())
+app.use(express.json())
 
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(express.static("public"));
+app.use("/public", express.static("public"));
 app.use(express.json());
+app.use(cors());
+
 mongoose.connect("mongodb+srv://olx:olx@cluster0.t2oaq.mongodb.net/Olx?retryWrites=true&w=majority");
 mongoose.connection.once('open', () => {
     console.log(' <-----Database Connected----->');
@@ -15,11 +24,7 @@ mongoose.connection.once('open', () => {
 mongoose.connection.on('error', () => {
     console.log("<---data base not Connect--->")
 });
-app.use(cors());
 
-app.use(fileUpload({
-    useTempFiles: true
-}))
 app.use('/api', routes)
 
 
